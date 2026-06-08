@@ -4,35 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>National & Civil IDs - Philippine Valid IDs</title>
-    <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <nav class="navbar">
-      <div class="logo">
-        <img src="./assets/logo.png" alt="Philippine Flag Logo" />
-      </div>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#categories">Categories</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+    <div id="navbar-container"></div>
 
     <header class="category-header">
       <div class="header-content">
-        <a href="index.html" class="back-button">← Go Back</a>
-        <h1><span class="category-icon-large">
+        <a href="../index.html" class="back-button">← Go Back</a>
+        <h1>
+          <span class="category-icon-large">
             <img
-                src="https://flagcdn.com/40x30/ph.png"
-                srcset="https://flagcdn.com/80x60/ph.png 2x,
-                    https://flagcdn.com/120x90/ph.png 3x"
-                width="40"
-                height="30"
-                alt="Philippines">
-            </span> National & Civil IDs</h1>
-        <p>Primary government-issued identification for all Filipino citizens.</p>
+              src="https://flagcdn.com/40x30/ph.png"
+              srcset="
+                https://flagcdn.com/80x60/ph.png  2x,
+                https://flagcdn.com/120x90/ph.png 3x
+              "
+              width="40"
+              height="30"
+              alt="Philippines"
+            />
+          </span>
+          National & Civil IDs
+        </h1>
+        <p>
+          Primary government-issued identification for all Filipino citizens.
+        </p>
       </div>
     </header>
 
@@ -40,14 +41,15 @@
       <div id="id-list-container" class="id-grid"></div>
     </main>
 
-    <script src="data.js"></script>
+    <script src="../scripts/data.js"></script>
+    <script src="../scripts/data-details.js"></script>
     <script>
       // 1. Get the data for this specific category from our database
       const categoryData = idDatabase["national-civil"].items;
       const container = document.getElementById("id-list-container");
 
       // 2. Loop through the items and create HTML for each ID
-      categoryData.forEach(idItem => {
+      categoryData.forEach((idItem) => {
         const cardHTML = `
           <a href="${idItem.link}" class="id-item-card">
             <div class="id-item-info">
@@ -64,5 +66,7 @@
         container.innerHTML += cardHTML;
       });
     </script>
+
+    <script src="../scripts/load-navbar.js"></script>
   </body>
 </html>
