@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Philippine IDs</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="preconnect" href="https://googleapis.com" />
+    <link rel="preconnect" href="https://gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div id="navbar-container"></div>
+
+    <main id="all-ids-list">
+      <!-- IDs will be injected here -->
+    </main>
+
+    <script src="../scripts/data.js"></script>
+    <script src="../scripts/data-details.js"></script>
+    <script>
+      (function () {
+        if (typeof idDatabase === "undefined") return;
+        const container = document.getElementById("all-ids-list");
+
+        const header = document.createElement("div");
+        header.className = "category-header";
+        header.innerHTML = `
+          <div class="header-content">
+            <a href="../index.html" class="back-button">← Home</a>
+            <h1>All Philippine IDs</h1>
+            <p>Comprehensive list of IDs across categories.</p>
+          </div>
+        `;
+        container.appendChild(header);
+
+        for (const catKey in idDatabase) {
+          const cat = idDatabase[catKey];
+          if (!cat) continue;
+
+          const section = document.createElement("section");
+          section.className = "id-list-section";
+
+          const title = document.createElement("h3");
+          title.setAttribute("style", "margin-bottom: 16px;");
+          title.textContent = cat.title;
+          title.style.color = "#111";
+          section.appendChild(title);
+
+          const grid = document.createElement("div");
+          grid.className = "id-grid";
+
+          (cat.items || []).forEach((item) => {
+            const a = document.createElement("a");
+            a.className = "id-item-card";
+            a.href = item.link || "#";
+            a.innerHTML = `
+              <div class="id-item-info">
+                <h2>${item.name}</h2>
+                <p>${item.tagline || ""}</p>
+              </div>
+              <div class="id-item-meta">
+                <div class="cost-badge">${item.cost || ""}</div>
+                <div><span class="view-btn">View</span></div>
+              </div>
+            `;
+            grid.appendChild(a);
+          });
+
+          section.appendChild(grid);
+          container.appendChild(section);
+        }
+      })();
+    </script>
+
+    <script src="../scripts/load-navbar.js"></script>
+  </body>
+</html>

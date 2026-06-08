@@ -4,36 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Philippine Passport Guide</title>
-    <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <nav class="navbar">
-      <div class="logo">
-        <img src="./assets/logo.png" alt="Philippine Flag Logo" />
-      </div>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#categories">Categories</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+    <div id="navbar-container"></div>
 
     <header class="detail-header">
       <div class="detail-header-content">
-        <a href="national-civil.html" class="back-button">← Back to National & Civil IDs</a>
+        <a href="national-civil.html" class="back-button">← Go Back</a>
         <h1 id="id-title">Loading...</h1>
         <p id="id-tagline"></p>
       </div>
     </header>
 
     <main class="detail-main">
-      <div id="detail-container" class="detail-grid">
-        </div>
+      <div id="detail-container" class="detail-grid"></div>
     </main>
 
-    <script src="data.js"></script>
+    <script src="../scripts/data.js"></script>
+    <script src="../scripts/data-details.js"></script>
     <script>
       // 1. Fetch the passport data
       const data = idDetails["passport"];
@@ -44,9 +37,13 @@
 
       // 3. Helper function to create HTML lists from our arrays
       const createList = (items, isNumbered = false) => {
-        const tag = isNumbered ? 'ol' : 'ul';
-        const classStr = isNumbered ? 'step-list' : 'bullet-list';
-        return `<${tag} class="${classStr}">` + items.map(item => `<li>${item}</li>`).join('') + `</${tag}>`;
+        const tag = isNumbered ? "ol" : "ul";
+        const classStr = isNumbered ? "step-list" : "bullet-list";
+        return (
+          `<${tag} class="${classStr}">` +
+          items.map((item) => `<li>${item}</li>`).join("") +
+          `</${tag}>`
+        );
       };
 
       // 4. Build the page sections
@@ -88,5 +85,7 @@
         </div>
       `;
     </script>
+
+    <script src="../scripts/load-navbar.js"></script>
   </body>
 </html>
