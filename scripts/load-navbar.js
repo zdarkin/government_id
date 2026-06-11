@@ -13,10 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 adjustNavbarLinks(isInPagesFolder);
                 initHamburgerMenu();
                 initThemeToggle();
-                // Only init search if the search input exists on this page (hero section)
-                if (document.getElementById('navSearchInput')) {
-                    initGlobalSearch(isInPagesFolder);
-                }
+                initGlobalSearch(isInPagesFolder);
             }
         })
         .catch(error => console.error("Error loading the navbar:", error));
@@ -155,27 +152,15 @@ function initGlobalSearch(isInPagesFolder) {
     const suggestionsBox = document.getElementById("searchSuggestions");
     if (!searchInput || !suggestionsBox) return;
 
-    // Inject data scripts only if not already loaded (for pages that don't pre-load them)
-    function ensureDataLoaded(callback) {
-        if (typeof idDatabase !== "undefined" && typeof idDetails !== "undefined") {
-            callback();
-            return;
-        }
-        let loadedCount = 0;
-        const total = (typeof idDatabase === "undefined" ? 1 : 0) + (typeof idDetails === "undefined" ? 1 : 0);
-        function onLoad() { loadedCount++; if (loadedCount >= total) callback(); }
-        if (typeof idDatabase === "undefined") {
-            const s = document.createElement("script");
-            s.src = isInPagesFolder ? "../scripts/data.js" : "scripts/data.js";
-            s.onload = onLoad;
-            document.head.appendChild(s);
-        }
-        if (typeof idDetails === "undefined") {
-            const s = document.createElement("script");
-            s.src = isInPagesFolder ? "../scripts/data-details.js" : "scripts/data-details.js";
-            s.onload = onLoad;
-            document.head.appendChild(s);
-        }
+    // Load data scripts if not already loaded in global window
+    if (typeof idDatabase === "undefined" || typeof idDetails === "undefined") {
+        const scriptData = document.createElement("script");
+        scriptData.src = isInPagesFolder ? "../scripts/data.js" : "scripts/data.js";
+        document.head.appendChild(scriptData);
+
+        const scriptDetails = document.createElement("script");
+        scriptDetails.src = isInPagesFolder ? "../scripts/data-details.js" : "scripts/data-details.js";
+        document.head.appendChild(scriptDetails);
     }
 
     searchInput.addEventListener("input", () => {
@@ -186,31 +171,37 @@ function initGlobalSearch(isInPagesFolder) {
             return;
         }
 
-        ensureDataLoaded(() => {
-            if (typeof idDatabase === "undefined" || typeof idDetails === "undefined") return;
+        // Wait until datasets are loaded in the window
+        if (typeof idDatabase === "undefined" || typeof idDetails === "undefined") return;
 
-            const results = [];
-            for (const catKey in idDatabase) {
-                const cat = idDatabase[catKey];
-                if (!cat || !cat.items) continue;
-                cat.items.forEach(item => {
-                    const detailedInfo = idDetails[item.id] || {};
-                    const nameMatch = item.name.toLowerCase().includes(query);
-                    const taglineMatch = (item.tagline || "").toLowerCase().includes(query);
-                    const reqsStr = (detailedInfo.requirements || []).join(" ").toLowerCase();
-                    const reqsMatch = reqsStr.includes(query);
-                    if (nameMatch || taglineMatch || reqsMatch) {
-                        results.push({
-                            id: item.id,
-                            name: item.name,
-                            tagline: item.tagline || "",
-                            link: isInPagesFolder ? `detail.html?id=${item.id}` : `pages/detail.html?id=${item.id}`
-                        });
-                    }
-                });
-            }
-            renderSuggestions(results, suggestionsBox);
-        });
+        const results = [];
+
+        // Traverse categories and search items
+        for (const catKey in idDatabase) {
+            const cat = idDatabase[catKey];
+            if (!cat || !cat.items) continue;
+
+            cat.items.forEach(item => {
+                const detailedInfo = idDetails[item.id] || {};
+                const nameMatch = item.name.toLowerCase().includes(query);
+                const taglineMatch = (item.tagline || "").toLowerCase().includes(query);
+                
+                // Also search in requirements for the ID
+                const reqsStr = (detailedInfo.requirements || []).join(" ").toLowerCase();
+                const reqsMatch = reqsStr.includes(query);
+
+                if (nameMatch || taglineMatch || reqsMatch) {
+                    results.push({
+                        id: item.id,
+                        name: item.name,
+                        tagline: item.tagline || "",
+                        link: isInPagesFolder ? `detail.html?id=${item.id}` : `pages/detail.html?id=${item.id}`
+                    });
+                }
+            });
+        }
+
+        renderSuggestions(results, suggestionsBox);
     });
 
     // Hide suggestions when clicking outside
