@@ -4,11 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>All Philippine IDs - Complete Directory</title>
-    <meta name="description" content="View the complete directory of all 24 valid government-issued IDs in the Philippines, including primary, secondary, and clearance requirements." />
+    <meta
+      name="description"
+      content="View the complete directory of all 24 valid government-issued IDs in the Philippines, including primary, secondary, and clearance requirements."
+    />
     <link rel="stylesheet" href="../styles/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
@@ -16,6 +22,14 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <div id="navbar-container"></div>
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="../index.html">Home</a></li>
+        <li aria-current="page">All IDs</li>
+      </ol>
+    </nav>
 
     <main id="all-ids-list">
       <!-- Header and ID categories lists will be injected here -->
@@ -78,8 +92,10 @@
             a.className = "id-item-card";
             a.href = item.link || "#";
 
-            const badgeClass = item.status === "primary" ? "badge-primary" : "badge-secondary";
-            const badgeLabel = item.status === "primary" ? "Primary ID" : "Secondary ID";
+            const badgeClass =
+              item.status === "primary" ? "badge-primary" : "badge-secondary";
+            const badgeLabel =
+              item.status === "primary" ? "Primary ID" : "Secondary ID";
 
             a.innerHTML = `
               <div class="id-item-info">
