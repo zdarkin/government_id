@@ -171,6 +171,13 @@ main {
   gap: 20px;
 }
 
+/* Left side grouping: logo + search */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 /* Global Search Box in Navbar */
 .nav-search-container {
   position: relative;
@@ -325,10 +332,14 @@ body.dark-theme .theme-toggle .sun-icon {
   transform: translateY(-8.5px) rotate(-45deg);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 480px) {
   .nav-search-container {
-    display: none; /* Can expand or show via modal if needed */
+    display: none;
   }
+}
+
+@media (max-width: 1024px) {
+
   .hamburger {
     display: flex;
   }
