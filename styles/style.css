@@ -326,9 +326,6 @@ body.dark-theme .theme-toggle .sun-icon {
 }
 
 @media (max-width: 860px) {
-  .nav-search-container {
-    display: none; /* Can expand or show via modal if needed */
-  }
   .hamburger {
     display: flex;
   }
