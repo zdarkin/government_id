@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact & Directory - Philippine Valid IDs</title>
+    <meta name="description" content="Official contact directory for DFA, SSS, LTO, PRC, and other ID-issuing agencies in the Philippines. Submit feedback or report updates to our guide." />
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div id="navbar-container"></div>
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="../index.html">Home</a></li>
+        <li aria-current="page">Contact</li>
+      </ol>
+    </nav>
+
+    <header class="category-header">
+      <div class="header-content">
+        <a href="../index.html" class="back-button">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16" style="display:inline-block; vertical-align:middle; margin-top:-2px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Home
+        </a>
+        <h1>Contact & Agency Directory</h1>
+        <p>Get in touch with us or access the official portals of the government agencies responsible for issuing valid identification cards.</p>
+      </div>
+    </header>
+
+    <main id="main-content" class="contact-section">
+      <div class="contact-grid">
+        
+        <!-- Contact/Feedback Form -->
+        <section class="content-section">
+          <h2>Send Us Feedback</h2>
+          <p style="margin-bottom: 20px; font-size: 14px; color: var(--color-text-muted);">
+            Did you find outdated information or broken links? Do you have suggestions for improvements? Leave us a message below:
+          </p>
+          
+          <form class="contact-form" onsubmit="event.preventDefault(); alert('Thank you! Your feedback has been simulated successfully.'); this.reset();">
+            <div class="form-group">
+              <label for="contact-name">Full Name</label>
+              <input type="text" id="contact-name" class="form-input" placeholder="Juan dela Cruz" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="contact-email">Email Address</label>
+              <input type="email" id="contact-email" class="form-input" placeholder="juan@gmail.com" required />
+            </div>
+
+            <div class="form-group">
+              <label for="contact-topic">Feedback Topic</label>
+              <select id="contact-topic" class="form-input" style="height: auto; padding: 10px;">
+                <option value="correction">Report Outdated Information</option>
+                <option value="feature">Suggest a Feature</option>
+                <option value="broken-link">Report a Broken Link</option>
+                <option value="general">General Inquiry</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="contact-message">Message</label>
+              <textarea id="contact-message" class="form-textarea" rows="5" placeholder="Enter details..." required></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="margin-top: 10px; border: none; align-self: flex-start;">
+              Submit Message
+            </button>
+          </form>
+        </section>
+
+        <!-- Official Directory list -->
+        <section class="content-section">
+          <h2>Official Agency Portals</h2>
+          <p style="margin-bottom: 20px; font-size: 14px; color: var(--color-text-muted);">
+            Please visit the official websites for setting appointments, fee updates, or reporting issues with your cards:
+          </p>
+
+          <div class="directory-list">
+            
+            <div class="directory-item">
+              <div class="directory-info">
+                <h4>Philippine Statistics Authority (PSA)</h4>
+                <p>PhilSys National ID Program</p>
+              </div>
+              <a href="https://www.philsys.gov.ph" target="_blank" rel="noopener" class="directory-link">philsys.gov.ph →</a>
+            </div>
+
+            <div class="directory-item">
+              <div class="directory-info">
+                <h4>Department of Foreign Affairs (DFA)</h4>
+                <p>Passport Bookings and Renewals</p>
+              </div>
+              <a href="https://www.passport.gov.ph" target="_blank" rel="noopener" class="directory-link">passport.gov.ph →</a>
+            </div>
+
+            <div class="directory-item">
+              <div class="directory-info">
+                <h4>Land Transportation Office (LTO)</h4>
+                <p>Driver's License & Permits (LTMS)</p>
+              </div>
+              <a href="https://portal.lto.gov.ph" target="_blank" rel="noopener" class="directory-link">portal.lto.gov.ph →</a>
+            </div>
+
+            <div class="directory-item">
+              <div class="directory-info">
+                <h4>Professional Regulation Commission (PRC)</h4>
+                <p>Professional Licensure Portal (LERIS)</p>
+              </div>
+              <a href="https://online.prc.gov.ph" target="_blank" rel="noopener" class="directory-link">online.prc.gov.ph →</a>
+            </div>
+
+            <div class="directory-item">
+              <div class="directory-info">
+                <h4>Social Security System (SSS)</h4>
+                <p>UMID & Social Benefit Services</p>
+              </div>
+              <a href="https://www.sss.gov.ph" target="_blank" rel="noopener" class="directory-link">sss.gov.ph →</a>
+            </div>
+
+            <div class="directory-item">
+              <div class="directory-info">
+                <h4>National Bureau of Investigation (NBI)</h4>
+                <p>NBI Clearance Applications</p>
+              </div>
+              <a href="https://clearance.nbi.gov.ph" target="_blank" rel="noopener" class="directory-link">clearance.nbi.gov.ph →</a>
+            </div>
+
+          </div>
+        </section>
+        
+      </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../scripts/load-navbar.js"></script>
+  </body>
+</html>

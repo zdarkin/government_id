@@ -3,129 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About Us - Philippine Valid IDs Complete Guide</title>
+    <title>About Us - Philippine Valid IDs Guide</title>
+    <meta name="description" content="Learn more about our mission to provide clear, accessible, and up-to-date information on Philippine government-issued identification cards." />
     <link rel="stylesheet" href="../styles/style.css" />
-    <link rel="preconnect" href="https://googleapis.com" />
-    <link rel="preconnect" href="https://gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
 
   <body>
-<div id="navbar-container"></div>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div id="navbar-container"></div>
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="../index.html">Home</a></li>
+        <li aria-current="page">About Us</li>
+      </ol>
+    </nav>
 
     <header class="category-header">
       <div class="header-content">
-        <a href="../index.html" class="back-button">← Go Back</a>
-        <h1>About Us</h1>
-        <p>Learn more about our mission and the information we provide.</p>
+        <a href="../index.html" class="back-button">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16" style="display:inline-block; vertical-align:middle; margin-top:-2px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Home
+        </a>
+        <h1>About Our Project</h1>
+        <p>Learn more about our mission, why having valid identification matters, and how we keep this informational portal updated.</p>
       </div>
     </header>
 
-    <main class="about-section">
+    <main id="main-content" class="about-section">
       <div class="about-content">
+        
         <div class="about-card">
           <h2>Our Mission</h2>
           <p>
-            We are dedicated to providing Filipinos with comprehensive, accurate, and up-to-date information about Philippine government-issued identification documents. Our goal is to simplify the process of understanding ID requirements, application procedures, and usage guidelines.
+            We are dedicated to providing Filipinos and foreign residents with comprehensive, accurate, and up-to-date information about Philippine government-issued identification documents. Our goal is to simplify the process of understanding ID requirements, application procedures, fees, and usage guidelines.
           </p>
         </div>
 
         <div class="about-card">
           <h2>What We Offer</h2>
           <p>
-            Our platform provides detailed guides for all valid Philippine IDs, including:
+            Our platform provides interactive tools and detailed guides for all 24 valid Philippine IDs:
           </p>
           <ul class="about-list">
-            <li>Comprehensive requirements for each ID type</li>
-            <li>Step-by-step application procedures</li>
-            <li>Processing times and fees</li>
-            <li>Accepted use cases and validity information</li>
-            <li>Contact information for relevant government agencies</li>
+            <li>Comprehensive, interactive checklists of requirements for each ID type</li>
+            <li>Step-by-step application procedures and digital portal instructions</li>
+            <li>Clear and transparent processing times and estimated costs</li>
+            <li>Acceptance matrices indicating where each ID is accepted</li>
+            <li>Direct reference directory for official government appointment systems</li>
           </ul>
         </div>
 
         <div class="about-card">
           <h2>Why This Matters</h2>
           <p>
-            Having a valid government-issued ID is essential for Filipinos. Whether you need it for employment, travel, banking, or other official transactions, understanding which ID is right for your needs and knowing the application process can save you time and effort.
+            Having a valid government-issued ID is essential in the Philippines. Whether you need it for career employment, travel, financial banking, or claiming social security benefits, understanding which ID is right for your needs and knowing how to apply can save significant time, effort, and money.
           </p>
           <p>
-            We've compiled all this information in one easy-to-navigate platform so you can quickly find what you need without visiting multiple government websites or offices.
+            We compile all this information in one clean, easy-to-navigate platform so you can quickly find what you need without sifting through disjointed government portals or falling victim to unauthorized fixers.
           </p>
         </div>
 
         <div class="about-card">
           <h2>Accuracy & Updates</h2>
           <p>
-            We strive to keep all information current and accurate. However, requirements and procedures may change. We recommend verifying critical information with official government sources before submitting applications or making important decisions based on our guides.
+            We strive to keep all information current and accurate. However, fees, guidelines, and procedures may change without notice. We recommend verifying critical details with official government portals (accessible via our directory on the Contact page) before submitting physical applications.
           </p>
         </div>
       </div>
     </main>
 
-    <style>
-      .about-section {
-        padding: 40px 20px;
-        max-width: 900px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .about-content {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-      }
-
-      .about-card {
-        background: white;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .about-card h2 {
-        color: #ff9800;
-        margin-bottom: 15px;
-        font-size: 1.5em;
-      }
-
-      .about-card p {
-        color: #333;
-        line-height: 1.6;
-        margin-bottom: 10px;
-      }
-
-      .about-card p:last-child {
-        margin-bottom: 0;
-      }
-
-      .about-list {
-        margin-left: 20px;
-        margin-top: 10px;
-        color: #333;
-        line-height: 1.8;
-      }
-
-      .about-list li {
-        margin-bottom: 8px;
-      }
-
-      @media (max-width: 768px) {
-        .about-section {
-          margin-top: 100px;
-          padding: 20px 15px;
-        }
-
-        .about-card {
-          padding: 20px;
-        }
-
-        .about-card h2 {
-          font-size: 1.3em;
-        }
-      }
-    </style>
+    <div id="footer-container"></div>
 
     <script src="../scripts/load-navbar.js"></script>
   </body>

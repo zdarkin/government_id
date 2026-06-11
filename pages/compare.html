@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ID Comparison Tool - Philippine Valid IDs</title>
+    <meta name="description" content="Compare up to 3 Philippine government-issued IDs side-by-side. Compare application costs, processing times, validity, and requirements count." />
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div id="navbar-container"></div>
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="../index.html">Home</a></li>
+        <li aria-current="page">Compare IDs</li>
+      </ol>
+    </nav>
+
+    <header class="category-header">
+      <div class="header-content">
+        <a href="../index.html" class="back-button">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16" style="display:inline-block; vertical-align:middle; margin-top:-2px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Home
+        </a>
+        <h1>Compare Valid IDs Side-by-Side</h1>
+        <p>Select up to 3 different Philippine IDs from the dropdowns below to compare their costs, processing times, validity, and requirements.</p>
+      </div>
+    </header>
+
+    <main id="main-content" class="compare-container">
+      <!-- Selectors grid -->
+      <div class="compare-selectors">
+        <div class="form-group">
+          <label for="compare-1">Select First ID:</label>
+          <select id="compare-1" class="compare-select">
+            <option value="">-- Choose ID 1 --</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="compare-2">Select Second ID:</label>
+          <select id="compare-2" class="compare-select">
+            <option value="">-- Choose ID 2 --</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="compare-3">Select Third ID:</label>
+          <select id="compare-3" class="compare-select">
+            <option value="">-- Choose ID 3 --</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Comparative Table -->
+      <div class="compare-table-wrapper">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th scope="col" style="background-color: var(--color-bg-alt); color: var(--color-text-main); font-weight: 700; width: 200px;">Features</th>
+              <th scope="col" id="col-title-1" style="width: 30%;">ID 1</th>
+              <th scope="col" id="col-title-2" style="width: 30%;">ID 2</th>
+              <th scope="col" id="col-title-3" style="width: 30%;">ID 3</th>
+            </tr>
+          </thead>
+          <tbody id="compare-tbody">
+            <!-- Dynamic rows will be inserted here -->
+            <tr>
+              <td class="compare-feature-name">Classification</td>
+              <td id="row-class-1" class="compare-empty-col">No ID selected</td>
+              <td id="row-class-2" class="compare-empty-col">No ID selected</td>
+              <td id="row-class-3" class="compare-empty-col">No ID selected</td>
+            </tr>
+            <tr>
+              <td class="compare-feature-name">Estimated Cost</td>
+              <td id="row-cost-1" class="compare-empty-col">No ID selected</td>
+              <td id="row-cost-2" class="compare-empty-col">No ID selected</td>
+              <td id="row-cost-3" class="compare-empty-col">No ID selected</td>
+            </tr>
+            <tr>
+              <td class="compare-feature-name">Processing Time</td>
+              <td id="row-time-1" class="compare-empty-col">No ID selected</td>
+              <td id="row-time-2" class="compare-empty-col">No ID selected</td>
+              <td id="row-time-3" class="compare-empty-col">No ID selected</td>
+            </tr>
+            <tr>
+              <td class="compare-feature-name">Validity Period</td>
+              <td id="row-valid-1" class="compare-empty-col">No ID selected</td>
+              <td id="row-valid-2" class="compare-empty-col">No ID selected</td>
+              <td id="row-valid-3" class="compare-empty-col">No ID selected</td>
+            </tr>
+            <tr>
+              <td class="compare-feature-name">Requirements Count</td>
+              <td id="row-reqs-1" class="compare-empty-col">No ID selected</td>
+              <td id="row-reqs-2" class="compare-empty-col">No ID selected</td>
+              <td id="row-reqs-3" class="compare-empty-col">No ID selected</td>
+            </tr>
+            <tr>
+              <td class="compare-feature-name">Action</td>
+              <td id="row-action-1" class="compare-empty-col">--</td>
+              <td id="row-action-2" class="compare-empty-col">--</td>
+              <td id="row-action-3" class="compare-empty-col">--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../scripts/data.js"></script>
+    <script src="../scripts/data-details.js"></script>
+    <script>
+      (function() {
+        // Collect all IDs from the database
+        const allIDs = [];
+        for (const catKey in idDatabase) {
+          const cat = idDatabase[catKey];
+          if (cat.items) {
+            cat.items.forEach(item => {
+              allIDs.push({
+                id: item.id,
+                name: item.name,
+                category: cat.title,
+                status: item.status,
+                cost: item.cost
+              });
+            });
+          }
+        }
+
+        // Sort alphabetically
+        allIDs.sort((a, b) => a.name.localeCompare(b.name));
+
+        // Populate dropdown selectors
+        const selectors = [
+          document.getElementById("compare-1"),
+          document.getElementById("compare-2"),
+          document.getElementById("compare-3")
+        ];
+
+        selectors.forEach(select => {
+          allIDs.forEach(idItem => {
+            const option = document.createElement("option");
+            option.value = idItem.id;
+            option.textContent = idItem.name;
+            select.appendChild(option);
+          });
+
+          select.addEventListener("change", updateComparison);
+        });
+
+        function updateComparison() {
+          for (let i = 1; i <= 3; i++) {
+            const select = document.getElementById(`compare-${i}`);
+            const idVal = select.value;
+            
+            const colTitle = document.getElementById(`col-title-${i}`);
+            const cellClass = document.getElementById(`row-class-${i}`);
+            const cellCost = document.getElementById(`row-cost-${i}`);
+            const cellTime = document.getElementById(`row-time-${i}`);
+            const cellValid = document.getElementById(`row-valid-${i}`);
+            const cellReqs = document.getElementById(`row-reqs-${i}`);
+            const cellAction = document.getElementById(`row-action-${i}`);
+
+            if (!idVal || !idDetails[idVal]) {
+              // Empty columns
+              colTitle.textContent = `ID ${i}`;
+              cellClass.textContent = "No ID selected";
+              cellClass.className = "compare-empty-col";
+              cellCost.textContent = "No ID selected";
+              cellCost.className = "compare-empty-col";
+              cellTime.textContent = "No ID selected";
+              cellTime.className = "compare-empty-col";
+              cellValid.textContent = "No ID selected";
+              cellValid.className = "compare-empty-col";
+              cellReqs.textContent = "No ID selected";
+              cellReqs.className = "compare-empty-col";
+              cellAction.innerHTML = "--";
+              cellAction.className = "compare-empty-col";
+              continue;
+            }
+
+            const data = idDetails[idVal];
+            const summary = allIDs.find(item => item.id === idVal);
+
+            // Populate columns
+            colTitle.textContent = data.name;
+            
+            // Classification Badge
+            const badgeClass = summary.status === "primary" ? "badge-primary" : "badge-secondary";
+            const badgeLabel = summary.status === "primary" ? "Primary ID" : "Secondary ID";
+            cellClass.innerHTML = `<span class="badge ${badgeClass}">${badgeLabel}</span>`;
+            cellClass.className = "";
+
+            // Cost
+            cellCost.textContent = data.cost;
+            cellCost.className = data.cost.toLowerCase().includes("free") ? "badge-primary" : "";
+            if (data.cost.toLowerCase().includes("free")) {
+              cellCost.style.backgroundColor = "var(--color-success-bg)";
+              cellCost.style.color = "var(--color-success)";
+              cellCost.style.fontWeight = "bold";
+            } else {
+              cellCost.style.backgroundColor = "";
+              cellCost.style.color = "";
+              cellCost.style.fontWeight = "";
+            }
+
+            // Processing Time
+            cellTime.textContent = data.processingTime;
+            cellTime.className = "";
+
+            // Validity
+            cellValid.textContent = data.validity;
+            cellValid.className = "";
+
+            // Requirements count
+            const reqCount = data.requirements.length;
+            cellReqs.textContent = `${reqCount} requirements`;
+            cellReqs.className = "";
+
+            // Action button
+            cellAction.innerHTML = `
+              <a href="detail.html?id=${idVal}" class="btn btn-primary" style="padding: 6px 12px; font-size: 13px; border-radius: var(--radius-sm);">
+                View Guide
+              </a>
+            `;
+            cellAction.className = "";
+          }
+        }
+      })();
+    </script>
+    <script src="../scripts/load-navbar.js"></script>
+  </body>
+</html>

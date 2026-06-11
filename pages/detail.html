@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ID Application Guide - Philippine Valid IDs</title>
+    <meta name="description" content="Step-by-step application guide, requirements, fees, processing times, and eligibility requirements for valid government-issued IDs in the Philippines." />
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div id="navbar-container"></div>
+
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol id="breadcrumbList">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="#" id="breadcrumbCategory">Category</a></li>
+        <li id="breadcrumbActive" aria-current="page">ID Name</li>
+      </ol>
+    </nav>
+
+    <header class="detail-header">
+      <div class="detail-header-content">
+        <a href="#" id="backButton" class="back-button">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16" style="display:inline-block; vertical-align:middle; margin-top:-2px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Go Back
+        </a>
+        <div class="detail-header-title-row">
+          <h1 id="id-title">Loading Guide...</h1>
+          <span class="badge" id="id-badge">Primary ID</span>
+        </div>
+        <p id="id-tagline">Please wait while the guide data is retrieved...</p>
+      </div>
+    </header>
+
+    <main id="main-content" class="detail-main">
+      <div id="detail-container" class="detail-grid">
+        <!-- Dynamic loading placeholders -->
+        <div class="detail-column">
+          <section class="info-card">
+            <h3>Quick Facts</h3>
+            <p>Loading facts...</p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../scripts/data.js"></script>
+    <script src="../scripts/data-details.js"></script>
+    <script>
+      (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const idKey = urlParams.get("id");
+
+        const container = document.getElementById("detail-container");
+        const titleEl = document.getElementById("id-title");
+        const taglineEl = document.getElementById("id-tagline");
+        const badgeEl = document.getElementById("id-badge");
+        const breadcrumbCategory = document.getElementById("breadcrumbCategory");
+        const breadcrumbActive = document.getElementById("breadcrumbActive");
+        const backBtn = document.getElementById("backButton");
+
+        // 1. Find the item in categories database to get category context
+        let categoryKey = null;
+        let categoryData = null;
+        let summaryItem = null;
+
+        for (const catKey in idDatabase) {
+          const cat = idDatabase[catKey];
+          const found = (cat.items || []).find(item => item.id === idKey);
+          if (found) {
+            categoryKey = catKey;
+            categoryData = cat;
+            summaryItem = found;
+            break;
+          }
+        }
+
+        // 2. Validate ID
+        if (!idKey || !idDetails[idKey] || !summaryItem) {
+          titleEl.textContent = "Guide Not Found";
+          taglineEl.textContent = "The requested identity document guide is missing or has been moved.";
+          badgeEl.style.display = "none";
+          container.innerHTML = `
+            <div style="text-align: center; padding: 40px 0; grid-column: span 2;">
+              <p style="color: var(--color-text-muted); margin-bottom: 20px;">We could not locate this ID guide in our system.</p>
+              <a href="../index.html" class="btn btn-primary">Return Home</a>
+            </div>
+          `;
+          return;
+        }
+
+        const data = idDetails[idKey];
+
+        // 3. Update Title, Breadcrumbs, Back Button
+        document.title = `${data.name} Application Guide - Philippine Valid IDs`;
+        titleEl.textContent = data.name;
+        taglineEl.textContent = data.tagline;
+        
+        badgeEl.textContent = summaryItem.status === "primary" ? "Primary ID" : "Secondary ID";
+        badgeEl.className = `badge ${summaryItem.status === "primary" ? "badge-primary" : "badge-secondary"}`;
+
+        breadcrumbCategory.textContent = categoryData.title;
+        breadcrumbCategory.href = `category.html?cat=${categoryKey}`;
+        breadcrumbActive.textContent = data.name;
+        backBtn.href = `category.html?cat=${categoryKey}`;
+
+        // 4. Helper list builder
+        const createList = (items, isNumbered = false) => {
+          const tag = isNumbered ? "ol" : "ul";
+          const classStr = isNumbered ? "step-list" : "bullet-list";
+          return (
+            `<${tag} class="${classStr}">` +
+            items.map((item) => `<li>${item}</li>`).join("") +
+            `</${tag}>`
+          );
+        };
+
+        // 5. Render details
+        container.innerHTML = `
+          <div class="detail-column">
+            <section class="info-card">
+              <h3>Quick Facts</h3>
+              <p><strong>💰 Cost:</strong> ${data.cost}</p>
+              <p><strong>⏳ Processing:</strong> ${data.processingTime}</p>
+              <p><strong>📅 Validity:</strong> ${data.validity}</p>
+            </section>
+
+            <section class="content-section">
+              <h2>Documentary Requirements</h2>
+              <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 15px;">
+                Check off items you have already prepared to track your progress:
+              </p>
+              <div class="checklist-container" id="checklistContainer"></div>
+              
+              <div class="checklist-progress-bar-container">
+                <div class="checklist-progress-bar" id="checklistProgressBar"></div>
+              </div>
+              <div class="checklist-progress-text" id="checklistProgressText">0% Complete</div>
+            </section>
+
+            <section class="content-section">
+              <h2>Eligibility Criteria</h2>
+              ${createList(data.eligibility)}
+            </section>
+          </div>
+
+          <div class="detail-column">
+            <section class="content-section">
+              <h2>How to Apply - Step by Step</h2>
+              ${createList(data.steps, true)}
+            </section>
+
+            <section class="content-section">
+              <h2>Where This ID is Accepted</h2>
+              ${createList(data.acceptedAt)}
+            </section>
+
+            <div class="reminder-box">
+              <strong>⚠️ Important Reminder:</strong> ${data.reminder}
+            </div>
+          </div>
+        `;
+
+        // 6. Build Interactive Checklist
+        const checklistContainer = document.getElementById("checklistContainer");
+        const progressBar = document.getElementById("checklistProgressBar");
+        const progressText = document.getElementById("checklistProgressText");
+
+        // Load checked states from localStorage
+        const storageKey = `checklist_id_${idKey}`;
+        let checkedStates = JSON.parse(localStorage.getItem(storageKey)) || [];
+
+        data.requirements.forEach((req, index) => {
+          const itemDiv = document.createElement("div");
+          itemDiv.className = "checklist-item";
+          if (checkedStates.includes(index)) {
+            itemDiv.classList.add("checked");
+          }
+
+          itemDiv.innerHTML = `
+            <input type="checkbox" id="req_chk_${index}" ${checkedStates.includes(index) ? 'checked' : ''} />
+            <span class="checklist-text">${req}</span>
+          `;
+
+          // Handle clicks on card
+          itemDiv.addEventListener("click", (e) => {
+            const checkbox = itemDiv.querySelector('input[type="checkbox"]');
+            if (e.target !== checkbox) {
+              checkbox.checked = !checkbox.checked;
+            }
+            toggleItemState(index, checkbox.checked, itemDiv);
+          });
+
+          // Handle checkbox directly
+          const checkbox = itemDiv.querySelector('input[type="checkbox"]');
+          checkbox.addEventListener("change", () => {
+            toggleItemState(index, checkbox.checked, itemDiv);
+          });
+
+          checklistContainer.appendChild(itemDiv);
+        });
+
+        function toggleItemState(index, isChecked, element) {
+          if (isChecked) {
+            element.classList.add("checked");
+            if (!checkedStates.includes(index)) checkedStates.push(index);
+          } else {
+            element.classList.remove("checked");
+            checkedStates = checkedStates.filter(i => i !== index);
+          }
+          localStorage.setItem(storageKey, JSON.stringify(checkedStates));
+          updateProgress();
+        }
+
+        function updateProgress() {
+          const total = data.requirements.length;
+          const checked = checkedStates.length;
+          const pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+          progressBar.style.width = `${pct}%`;
+          progressText.textContent = `${pct}% Complete`;
+        }
+
+        updateProgress();
+
+        // 7. Inject SEO Schema Markup (HowTo Schema)
+        const schema = {
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          "name": `How to Apply for a ${data.name}`,
+          "description": data.tagline,
+          "estimatedCost": {
+            "@type": "MonetaryAmount",
+            "currency": "PHP",
+            "value": data.cost.includes("FREE") ? "0" : data.cost.replace(/[^0-9]/g, "")
+          },
+          "tool": data.requirements.map(req => ({
+            "@type": "HowToTool",
+            "name": req
+          })),
+          "step": data.steps.map((step, idx) => ({
+            "@type": "HowToStep",
+            "position": idx + 1,
+            "text": step
+          }))
+        };
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify(schema);
+        document.head.appendChild(script);
+      })();
+    </script>
+    <script src="../scripts/load-navbar.js"></script>
+  </body>
+</html>

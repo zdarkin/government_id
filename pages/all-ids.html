@@ -3,22 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>All Philippine IDs</title>
+    <title>All Philippine IDs - Complete Directory</title>
+    <meta name="description" content="View the complete directory of all 24 valid government-issued IDs in the Philippines, including primary, secondary, and clearance requirements." />
     <link rel="stylesheet" href="../styles/style.css" />
-    <link rel="preconnect" href="https://googleapis.com" />
-    <link rel="preconnect" href="https://gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
 
   <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <div id="navbar-container"></div>
 
     <main id="all-ids-list">
-      <!-- IDs will be injected here -->
+      <!-- Header and ID categories lists will be injected here -->
     </main>
+
+    <div id="footer-container"></div>
 
     <script src="../scripts/data.js"></script>
     <script src="../scripts/data-details.js"></script>
@@ -27,28 +30,44 @@
         if (typeof idDatabase === "undefined") return;
         const container = document.getElementById("all-ids-list");
 
+        // 1. Render Page Header
         const header = document.createElement("div");
         header.className = "category-header";
         header.innerHTML = `
           <div class="header-content">
-            <a href="../index.html" class="back-button">← Home</a>
-            <h1>All Philippine IDs</h1>
-            <p>Comprehensive list of IDs across categories.</p>
+            <a href="../index.html" class="back-button">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16" style="display:inline-block; vertical-align:middle; margin-top:-2px;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Home
+            </a>
+            <h1>All Philippine IDs Directory</h1>
+            <p>Comprehensive list of all 24 valid identification cards and clearances across categories.</p>
           </div>
         `;
         container.appendChild(header);
 
+        // 2. Wrap categories lists in a main-content wrapper for accessibility skip links
+        const mainContentDiv = document.createElement("div");
+        mainContentDiv.id = "main-content";
+        container.appendChild(mainContentDiv);
+
+        // 3. Render Categories & Items
         for (const catKey in idDatabase) {
           const cat = idDatabase[catKey];
           if (!cat) continue;
 
           const section = document.createElement("section");
           section.className = "id-list-section";
+          section.style.paddingTop = "20px";
+          section.style.paddingBottom = "20px";
 
-          const title = document.createElement("h3");
-          title.setAttribute("style", "margin-bottom: 16px;");
-          title.textContent = cat.title;
-          title.style.color = "#111";
+          const title = document.createElement("h2");
+          title.style.fontSize = "22px";
+          title.style.marginBottom = "20px";
+          title.style.color = "var(--color-primary)";
+          title.style.fontWeight = "800";
+          title.innerHTML = `${cat.icon} ${cat.title}`;
           section.appendChild(title);
 
           const grid = document.createElement("div");
@@ -58,21 +77,35 @@
             const a = document.createElement("a");
             a.className = "id-item-card";
             a.href = item.link || "#";
+
+            const badgeClass = item.status === "primary" ? "badge-primary" : "badge-secondary";
+            const badgeLabel = item.status === "primary" ? "Primary ID" : "Secondary ID";
+
             a.innerHTML = `
               <div class="id-item-info">
-                <h2>${item.name}</h2>
+                <div class="id-title-row">
+                  <h2>${item.name}</h2>
+                  <span class="badge ${badgeClass}">${badgeLabel}</span>
+                </div>
                 <p>${item.tagline || ""}</p>
               </div>
               <div class="id-item-meta">
                 <div class="cost-badge">${item.cost || ""}</div>
-                <div><span class="view-btn">View</span></div>
+                <div>
+                  <span class="view-btn">
+                    View
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
               </div>
             `;
             grid.appendChild(a);
           });
 
           section.appendChild(grid);
-          container.appendChild(section);
+          mainContentDiv.appendChild(section);
         }
       })();
     </script>

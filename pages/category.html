@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Category Guides - Philippine Valid IDs</title>
+    <meta name="description" content="Browse valid Philippine IDs by category. Get comprehensive checklists and guides for national, employment, licensure, clearances, and institutional identification." />
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div id="navbar-container"></div>
+
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol id="breadcrumbList">
+        <li><a href="../index.html">Home</a></li>
+        <li id="breadcrumbActive" aria-current="page">Category</li>
+      </ol>
+    </nav>
+
+    <header class="category-header">
+      <div class="header-content">
+        <a href="../index.html" class="back-button">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16" style="display:inline-block; vertical-align:middle; margin-top:-2px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Go Back
+        </a>
+        <h1 id="category-title">
+          <span class="category-icon-large" id="category-icon"></span>
+          <span id="category-name-text">Loading Category...</span>
+        </h1>
+        <p id="category-description">Loading category description...</p>
+      </div>
+    </header>
+
+    <main id="main-content" class="id-list-section">
+      <div id="id-list-container" class="id-grid">
+        <!-- Dynamic loading skeleton -->
+        <div class="id-item-card" style="opacity: 0.5; pointer-events: none;">
+          <div class="id-item-info">
+            <h2>Loading...</h2>
+            <p>Gathering documents and details...</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../scripts/data.js"></script>
+    <script>
+      (function() {
+        // 1. Get query parameter 'cat'
+        const urlParams = new URLSearchParams(window.location.search);
+        const catKey = urlParams.get("cat");
+
+        const listContainer = document.getElementById("id-list-container");
+        const titleText = document.getElementById("category-name-text");
+        const titleIcon = document.getElementById("category-icon");
+        const descText = document.getElementById("category-description");
+        const breadcrumbActive = document.getElementById("breadcrumbActive");
+
+        // 2. Validate category key
+        if (!catKey || !idDatabase[catKey]) {
+          titleText.textContent = "Category Not Found";
+          descText.textContent = "The requested category could not be located in our database. Please select another category from the homepage.";
+          titleIcon.textContent = "⚠️";
+          listContainer.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: var(--color-text-muted);">
+              <p style="margin-bottom: 20px;">We couldn't find what you were looking for.</p>
+              <a href="../index.html" class="btn btn-primary">Return Home</a>
+            </div>
+          `;
+          return;
+        }
+
+        const category = idDatabase[catKey];
+
+        // 3. Populate Header & Document Title
+        document.title = `${category.title} - Philippine Valid IDs Guide`;
+        titleText.textContent = category.title;
+        titleIcon.textContent = category.icon;
+        descText.textContent = category.description;
+        breadcrumbActive.textContent = category.title;
+
+        // 4. Render IDs List
+        listContainer.innerHTML = "";
+        if (!category.items || category.items.length === 0) {
+          listContainer.innerHTML = `<p style="text-align:center; color:var(--color-text-muted);">No IDs listed under this category yet.</p>`;
+          return;
+        }
+
+        category.items.forEach(idItem => {
+          const badgeClass = idItem.status === "primary" ? "badge-primary" : "badge-secondary";
+          const badgeLabel = idItem.status === "primary" ? "Primary ID" : "Secondary ID";
+          
+          const cardHTML = `
+            <a href="detail.html?id=${idItem.id}" class="id-item-card">
+              <div class="id-item-info">
+                <div class="id-title-row">
+                  <h2>${idItem.name}</h2>
+                  <span class="badge ${badgeClass}">${badgeLabel}</span>
+                </div>
+                <p>${idItem.tagline}</p>
+              </div>
+              <div class="id-item-meta">
+                <span class="cost-badge">${idItem.cost}</span>
+                <span class="view-btn">
+                  View Guide
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+            </a>
+          `;
+          listContainer.innerHTML += cardHTML;
+        });
+
+        // 5. Inject dynamic structured data breadcrumbs for SEO
+        const schema = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": window.location.origin + window.location.pathname.replace("pages/category.html", "index.html")
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": category.title,
+              "item": window.location.href
+            }
+          ]
+        };
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify(schema);
+        document.head.appendChild(script);
+      })();
+    </script>
+    <script src="../scripts/load-navbar.js"></script>
+  </body>
+</html>
