@@ -11,17 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <!-- Accessibility Skip Link -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
     <div id="navbar-container"></div>
 
     <!-- Breadcrumb Navigation -->
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <nav class="breadcrumbs">
       <ol id="breadcrumbList">
         <li><a href="../index.html">Home</a></li>
         <li><a href="#" id="breadcrumbCategory">Category</a></li>
-        <li id="breadcrumbActive" aria-current="page">ID Name</li>
+        <li id="breadcrumbActive">ID Name</li>
       </ol>
     </nav>
 
@@ -131,9 +128,9 @@
           <div class="detail-column">
             <section class="info-card">
               <h3>Quick Facts</h3>
-              <p><strong>💰 Cost:</strong> ${data.cost}</p>
-              <p><strong>⏳ Processing:</strong> ${data.processingTime}</p>
-              <p><strong>📅 Validity:</strong> ${data.validity}</p>
+              <p><strong>Cost:</strong> ${data.cost}</p>
+              <p><strong>Processing:</strong> ${data.processingTime}</p>
+              <p><strong>Validity:</strong> ${data.validity}</p>
             </section>
 
             <section class="content-section">
@@ -167,7 +164,7 @@
             </section>
 
             <div class="reminder-box">
-              <strong>⚠️ Important Reminder:</strong> ${data.reminder}
+              <strong>Important Reminder:</strong> ${data.reminder}
             </div>
           </div>
         `;
@@ -233,31 +230,7 @@
 
         updateProgress();
 
-        // 7. Inject SEO Schema Markup (HowTo Schema)
-        const schema = {
-          "@context": "https://schema.org",
-          "@type": "HowTo",
-          "name": `How to Apply for a ${data.name}`,
-          "description": data.tagline,
-          "estimatedCost": {
-            "@type": "MonetaryAmount",
-            "currency": "PHP",
-            "value": data.cost.includes("FREE") ? "0" : data.cost.replace(/[^0-9]/g, "")
-          },
-          "tool": data.requirements.map(req => ({
-            "@type": "HowToTool",
-            "name": req
-          })),
-          "step": data.steps.map((step, idx) => ({
-            "@type": "HowToStep",
-            "position": idx + 1,
-            "text": step
-          }))
-        };
-        const script = document.createElement('script');
-        script.type = 'application/ld+json';
-        script.text = JSON.stringify(schema);
-        document.head.appendChild(script);
+
       })();
     </script>
     <script src="../scripts/load-navbar.js"></script>

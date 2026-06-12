@@ -11,16 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <!-- Accessibility Skip Link -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
     <div id="navbar-container"></div>
 
     <!-- Breadcrumbs -->
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <nav class="breadcrumbs">
       <ol>
         <li><a href="../index.html">Home</a></li>
-        <li aria-current="page">FAQs</li>
+        <li>FAQs</li>
       </ol>
     </nav>
 
@@ -41,7 +38,7 @@
       
       <!-- FAQ Accordion 1 -->
       <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
+        <button class="faq-question">
           <span>What is the difference between a Primary ID and a Secondary ID?</span>
           <span class="faq-icon">+</span>
         </button>
@@ -55,7 +52,7 @@
 
       <!-- FAQ Accordion 2 -->
       <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
+        <button class="faq-question">
           <span>Which ID should I get first as a beginner?</span>
           <span class="faq-icon">+</span>
         </button>
@@ -75,7 +72,7 @@
 
       <!-- FAQ Accordion 3 -->
       <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
+        <button class="faq-question">
           <span>What is the cheapest/most affordable valid ID?</span>
           <span class="faq-icon">+</span>
         </button>
@@ -89,7 +86,7 @@
 
       <!-- FAQ Accordion 4 -->
       <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
+        <button class="faq-question">
           <span>Can I still use expired government IDs?</span>
           <span class="faq-icon">+</span>
         </button>
@@ -102,7 +99,7 @@
 
       <!-- FAQ Accordion 5 -->
       <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
+        <button class="faq-question">
           <span>How many valid IDs are needed to open a bank account in the Philippines?</span>
           <span class="faq-icon">+</span>
         </button>
@@ -115,7 +112,7 @@
 
       <!-- FAQ Accordion 6 -->
       <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
+        <button class="faq-question">
           <span>What is the ePhilID and is it legally accepted by establishments?</span>
           <span class="faq-icon">+</span>
         </button>
@@ -128,7 +125,7 @@
 
       <!-- FAQ Accordion 7 -->
       <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
+        <button class="faq-question">
           <span>How can I replace a lost or damaged government ID?</span>
           <span class="faq-icon">+</span>
         </button>
@@ -158,22 +155,19 @@
           btn.addEventListener("click", () => {
             const faqItem = btn.parentElement;
             const answer = faqItem.querySelector(".faq-answer");
-            const isExpanded = btn.getAttribute("aria-expanded") === "true";
 
             // Close other items
             document.querySelectorAll(".faq-item").forEach(item => {
               if (item !== faqItem) {
                 item.classList.remove("active");
-                item.querySelector(".faq-question").setAttribute("aria-expanded", "false");
                 item.querySelector(".faq-answer").style.maxHeight = null;
               }
             });
 
             // Toggle current item
             faqItem.classList.toggle("active");
-            btn.setAttribute("aria-expanded", !isExpanded);
             
-            if (!isExpanded) {
+            if (faqItem.classList.contains("active")) {
               answer.style.maxHeight = answer.scrollHeight + "px";
             } else {
               answer.style.maxHeight = null;
@@ -183,55 +177,6 @@
       });
     </script>
     
-    <!-- SEO FAQ Schema Markup -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is the difference between a Primary ID and a Secondary ID?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Primary IDs are government-issued identity documents featuring biometrics and are accepted standalone (e.g. Passport, National ID). Secondary IDs lack biometrics and typically require two documents to establish verification (e.g. PhilHealth, TIN ID)."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Which ID should I get first as a beginner?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Beginners should start with Barangay Clearance, then NBI or Police Clearances (free under RA 11261 for job seekers), followed by PhilSys National ID (free) or Postal ID (primary, paid)."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the cheapest/most affordable valid ID?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The PhilSys National ID, TIN ID, GSIS ID, and Senior/PWD/Solo Parent IDs are 100% free. Clearances are also cheap and are free for first-time job seekers."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How many valid IDs are needed to open a bank account in the Philippines?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Under BSP rules, only one (1) Primary valid ID is required to open an account. If unavailable, two (2) Secondary valid IDs are required."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the ePhilID and is it legally accepted by establishments?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, the ePhilID is the digital national ID issued by the PSA. It holds the same legal validity as the physical PhilID card and is legally mandated to be accepted by all establishments."
-            }
-          }
-        ]
-      }
-    </script>
     <script src="../scripts/load-navbar.js"></script>
   </body>
 </html>

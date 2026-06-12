@@ -11,16 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <!-- Accessibility Skip Link -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
     <div id="navbar-container"></div>
 
     <!-- Breadcrumbs -->
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <nav class="breadcrumbs">
       <ol>
         <li><a href="../index.html">Home</a></li>
-        <li aria-current="page">ID Finder Quiz</li>
+        <li>ID Finder Quiz</li>
       </ol>
     </nav>
 
@@ -49,23 +46,23 @@
         <div class="quiz-options">
           <button class="quiz-option" data-value="travel">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">✈️ International Travel or proof of citizenship</span>
+            <span class="quiz-option-text">International Travel or proof of citizenship</span>
           </button>
           <button class="quiz-option" data-value="job">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">💼 Job Application / local employment requirements</span>
+            <span class="quiz-option-text">Job Application / local employment requirements</span>
           </button>
           <button class="quiz-option" data-value="banking">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">🏦 Financial transactions (opening bank accounts, loans)</span>
+            <span class="quiz-option-text">Financial transactions (opening bank accounts, loans)</span>
           </button>
           <button class="quiz-option" data-value="general">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">💳 General identification (daily official use, packages)</span>
+            <span class="quiz-option-text">General identification (daily official use, packages)</span>
           </button>
         </div>
         <div class="quiz-nav" style="justify-content: flex-end;">
-          <button class="btn btn-primary" onclick="nextStep(1)">Next Question →</button>
+          <button class="btn btn-primary" onclick="nextStep(1)">Next Question</button>
         </div>
       </div>
 
@@ -75,20 +72,20 @@
         <div class="quiz-options">
           <button class="quiz-option" data-value="free">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">🆓 100% Free IDs only</span>
+            <span class="quiz-option-text">100% Free IDs only</span>
           </button>
           <button class="quiz-option" data-value="cheap">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">🪙 Low cost (Under ₱500)</span>
+            <span class="quiz-option-text">Low cost (Under ₱500)</span>
           </button>
           <button class="quiz-option" data-value="any">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">💵 Any cost (prioritizing primary/lifetime IDs)</span>
+            <span class="quiz-option-text">Any cost (prioritizing primary/lifetime IDs)</span>
           </button>
         </div>
         <div class="quiz-nav">
-          <button class="btn btn-secondary" onclick="prevStep(2)">← Back</button>
-          <button class="btn btn-primary" onclick="nextStep(2)">Next Question →</button>
+          <button class="btn btn-secondary" onclick="prevStep(2)">Back</button>
+          <button class="btn btn-primary" onclick="nextStep(2)">Next Question</button>
         </div>
       </div>
 
@@ -98,20 +95,20 @@
         <div class="quiz-options">
           <button class="quiz-option" data-value="immediate">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">⚡ Urgent (Same day or within 24 hours)</span>
+            <span class="quiz-option-text">Urgent (Same day or within 24 hours)</span>
           </button>
           <button class="quiz-option" data-value="week">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">📅 Soon (Within 3 to 7 working days)</span>
+            <span class="quiz-option-text">Soon (Within 3 to 7 working days)</span>
           </button>
           <button class="quiz-option" data-value="norush">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">⏳ No rush (Willing to wait for physical delivery)</span>
+            <span class="quiz-option-text">No rush (Willing to wait for physical delivery)</span>
           </button>
         </div>
         <div class="quiz-nav">
-          <button class="btn btn-secondary" onclick="prevStep(3)">← Back</button>
-          <button class="btn btn-primary" onclick="nextStep(3)">Next Question →</button>
+          <button class="btn btn-secondary" onclick="prevStep(3)">Back</button>
+          <button class="btn btn-primary" onclick="nextStep(3)">Next Question</button>
         </div>
       </div>
 
@@ -121,36 +118,36 @@
         <div class="quiz-options">
           <button class="quiz-option" data-value="senior">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">👴 Senior Citizen (Aged 60+)</span>
+            <span class="quiz-option-text">Senior Citizen (Aged 60+)</span>
           </button>
           <button class="quiz-option" data-value="student">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">🎒 Student (Currently enrolled in school/college)</span>
+            <span class="quiz-option-text">Student (Currently enrolled in school/college)</span>
           </button>
           <button class="quiz-option" data-value="pwd">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">♿ Person with Disability (PWD)</span>
+            <span class="quiz-option-text">Person with Disability (PWD)</span>
           </button>
           <button class="quiz-option" data-value="employed">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">🏢 Employed (Regular office worker or government employee)</span>
+            <span class="quiz-option-text">Employed (Regular office worker or government employee)</span>
           </button>
           <button class="quiz-option" data-value="soloparent">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">👩‍👦 Solo Parent / Single Parent</span>
+            <span class="quiz-option-text">Solo Parent / Single Parent</span>
           </button>
           <button class="quiz-option" data-value="foreigner">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">🗺️ Foreign National residing in the Philippines</span>
+            <span class="quiz-option-text">Foreign National residing in the Philippines</span>
           </button>
           <button class="quiz-option" data-value="none">
             <span class="quiz-option-radio"></span>
-            <span class="quiz-option-text">❌ None of the above / General Citizen</span>
+            <span class="quiz-option-text">None of the above / General Citizen</span>
           </button>
         </div>
         <div class="quiz-nav">
-          <button class="btn btn-secondary" onclick="prevStep(4)">← Back</button>
-          <button class="btn btn-primary" onclick="calculateResults()">Submit Answers →</button>
+          <button class="btn btn-secondary" onclick="prevStep(4)">Back</button>
+          <button class="btn btn-primary" onclick="calculateResults()">Submit Answers</button>
         </div>
       </div>
 

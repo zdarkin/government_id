@@ -42,16 +42,19 @@ document.addEventListener("DOMContentLoaded", () => {
     addBackToTopButton();
 });
 
+// Resolves a link href based on current folder context
+function resolvePath(href, isInPagesFolder) {
+    if (href === "index.html") {
+        return isInPagesFolder ? "../index.html" : "index.html";
+    }
+    return isInPagesFolder ? href : `pages/${href}`;
+}
+
 function adjustNavbarLinks(isInPagesFolder) {
-    const linkMap = {
-        "index.html": isInPagesFolder ? "../index.html" : "index.html",
-        "all-ids.html": isInPagesFolder ? "all-ids.html" : "pages/all-ids.html",
-        "compare.html": isInPagesFolder ? "compare.html" : "pages/compare.html",
-        "finder.html": isInPagesFolder ? "finder.html" : "pages/finder.html",
-        "faq.html": isInPagesFolder ? "faq.html" : "pages/faq.html",
-        "about.html": isInPagesFolder ? "about.html" : "pages/about.html",
-        "contact.html": isInPagesFolder ? "contact.html" : "pages/contact.html"
-    };
+    const navHrefs = ["index.html", "all-ids.html", "compare.html", "finder.html", "faq.html", "about.html", "contact.html"];
+    const linkMap = Object.fromEntries(navHrefs.map(href => [href, resolvePath(href, isInPagesFolder)]));
+
+    const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
     document.querySelectorAll("#navLinks a").forEach(link => {
         const originalHref = link.getAttribute("href");
@@ -59,7 +62,6 @@ function adjustNavbarLinks(isInPagesFolder) {
             link.setAttribute("href", linkMap[originalHref]);
         }
         // Highlight active page
-        const currentPage = window.location.pathname.split("/").pop() || "index.html";
         if (originalHref === currentPage || (currentPage === "" && originalHref === "index.html")) {
             link.classList.add("active");
         }
@@ -76,22 +78,12 @@ function adjustNavbarLinks(isInPagesFolder) {
 }
 
 function adjustFooterLinks(isInPagesFolder) {
-    const linkMap = {
-        "index.html": isInPagesFolder ? "../index.html" : "index.html",
-        "all-ids.html": isInPagesFolder ? "all-ids.html" : "pages/all-ids.html",
-        "compare.html": isInPagesFolder ? "compare.html" : "pages/compare.html",
-        "finder.html": isInPagesFolder ? "finder.html" : "pages/finder.html",
-        "faq.html": isInPagesFolder ? "faq.html" : "pages/faq.html",
-        "about.html": isInPagesFolder ? "about.html" : "pages/about.html",
-        "contact.html": isInPagesFolder ? "contact.html" : "pages/contact.html",
-        
-        "category.html?cat=national-civil": isInPagesFolder ? "category.html?cat=national-civil" : "pages/category.html?cat=national-civil",
-        "category.html?cat=employment": isInPagesFolder ? "category.html?cat=employment" : "pages/category.html?cat=employment",
-        "category.html?cat=licensure": isInPagesFolder ? "category.html?cat=licensure" : "pages/category.html?cat=licensure",
-        "category.html?cat=special-groups": isInPagesFolder ? "category.html?cat=special-groups" : "pages/category.html?cat=special-groups",
-        "category.html?cat=clearances": isInPagesFolder ? "category.html?cat=clearances" : "pages/category.html?cat=clearances",
-        "category.html?cat=institutional": isInPagesFolder ? "category.html?cat=institutional" : "pages/category.html?cat=institutional"
-    };
+    const footerHrefs = [
+        "index.html", "all-ids.html", "compare.html", "finder.html", "faq.html", "about.html", "contact.html",
+        "category.html?cat=national-civil", "category.html?cat=employment", "category.html?cat=licensure",
+        "category.html?cat=special-groups", "category.html?cat=clearances", "category.html?cat=institutional"
+    ];
+    const linkMap = Object.fromEntries(footerHrefs.map(href => [href, resolvePath(href, isInPagesFolder)]));
 
     document.querySelectorAll(".footer-links a").forEach(link => {
         const originalHref = link.getAttribute("href");
@@ -107,8 +99,6 @@ function initHamburgerMenu() {
     
     if (hamburger && navLinks) {
         hamburger.addEventListener("click", () => {
-            const expanded = hamburger.getAttribute("aria-expanded") === "true";
-            hamburger.setAttribute("aria-expanded", !expanded);
             hamburger.classList.toggle("active");
             navLinks.classList.toggle("active");
         });
@@ -117,7 +107,6 @@ function initHamburgerMenu() {
         const links = navLinks.querySelectorAll("a");
         links.forEach(link => {
             link.addEventListener("click", () => {
-                hamburger.setAttribute("aria-expanded", "false");
                 hamburger.classList.remove("active");
                 navLinks.classList.remove("active");
             });
@@ -152,17 +141,26 @@ function initGlobalSearch(isInPagesFolder) {
     const suggestionsBox = document.getElementById("searchSuggestions");
     if (!searchInput || !suggestionsBox) return;
 
-    // Load data scripts if not already loaded in global window
-    if (typeof idDatabase === "undefined" || typeof idDetails === "undefined") {
-        const scriptData = document.createElement("script");
-        scriptData.src = isInPagesFolder ? "../scripts/data.js" : "scripts/data.js";
-        document.head.appendChild(scriptData);
-
-        const scriptDetails = document.createElement("script");
-        scriptDetails.src = isInPagesFolder ? "../scripts/data-details.js" : "scripts/data-details.js";
-        document.head.appendChild(scriptDetails);
+    // If data is already loaded, attach listener immediately
+    if (typeof idDatabase !== "undefined" && typeof idDetails !== "undefined") {
+        attachSearchListener(searchInput, suggestionsBox, isInPagesFolder);
+        return;
     }
 
+    // Otherwise load scripts sequentially, then attach listener
+    const scriptData = document.createElement("script");
+    scriptData.src = isInPagesFolder ? "../scripts/data.js" : "scripts/data.js";
+
+    const scriptDetails = document.createElement("script");
+    scriptDetails.src = isInPagesFolder ? "../scripts/data-details.js" : "scripts/data-details.js";
+
+    scriptDetails.onload = () => attachSearchListener(searchInput, suggestionsBox, isInPagesFolder);
+    scriptData.onload = () => document.head.appendChild(scriptDetails);
+
+    document.head.appendChild(scriptData);
+}
+
+function attachSearchListener(searchInput, suggestionsBox, isInPagesFolder) {
     searchInput.addEventListener("input", () => {
         const query = searchInput.value.trim().toLowerCase();
         if (query.length < 2) {
@@ -170,9 +168,6 @@ function initGlobalSearch(isInPagesFolder) {
             suggestionsBox.classList.remove("active");
             return;
         }
-
-        // Wait until datasets are loaded in the window
-        if (typeof idDatabase === "undefined" || typeof idDetails === "undefined") return;
 
         const results = [];
 
@@ -185,7 +180,7 @@ function initGlobalSearch(isInPagesFolder) {
                 const detailedInfo = idDetails[item.id] || {};
                 const nameMatch = item.name.toLowerCase().includes(query);
                 const taglineMatch = (item.tagline || "").toLowerCase().includes(query);
-                
+
                 // Also search in requirements for the ID
                 const reqsStr = (detailedInfo.requirements || []).join(" ").toLowerCase();
                 const reqsMatch = reqsStr.includes(query);
@@ -222,16 +217,26 @@ function initGlobalSearch(isInPagesFolder) {
 function renderSuggestions(results, container) {
     container.innerHTML = "";
     if (results.length === 0) {
-        container.innerHTML = `<div class="suggestion-no-results">No IDs found</div>`;
+        const noResults = document.createElement("div");
+        noResults.className = "suggestion-no-results";
+        noResults.textContent = "No IDs found";
+        container.appendChild(noResults);
     } else {
         results.slice(0, 5).forEach(item => {
             const a = document.createElement("a");
             a.className = "suggestion-item";
             a.href = item.link;
-            a.innerHTML = `
-                <span class="suggestion-name">${item.name}</span>
-                <span class="suggestion-desc">${item.tagline}</span>
-            `;
+
+            const nameSpan = document.createElement("span");
+            nameSpan.className = "suggestion-name";
+            nameSpan.textContent = item.name;
+
+            const descSpan = document.createElement("span");
+            descSpan.className = "suggestion-desc";
+            descSpan.textContent = item.tagline;
+
+            a.appendChild(nameSpan);
+            a.appendChild(descSpan);
             container.appendChild(a);
         });
     }
@@ -243,7 +248,6 @@ function addBackToTopButton() {
     const btn = document.createElement("button");
     btn.className = "back-to-top";
     btn.id = "backToTopBtn";
-    btn.ariaLabel = "Scroll to top";
     btn.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />

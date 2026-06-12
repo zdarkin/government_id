@@ -3,7 +3,7 @@ const idDatabase = {
   "national-civil": {
     title: "National & Civil IDs",
     description: "Primary government-issued identification for all Filipino citizens.",
-    icon: "🇵🇭",
+    icon: "national-civil.svg",
     items: [
       {
         id: "philsys",
@@ -34,7 +34,7 @@ const idDatabase = {
   "employment": {
     title: "Employment and Benefits",
     description: "IDs associated with national health insurance, social security, and housing funds.",
-    icon: "💼",
+    icon: "employment.svg",
     items: [
       {
         id: "sss-umid",
@@ -81,7 +81,7 @@ const idDatabase = {
   "licensure": {
     title: "Licensure and Profession",
     description: "Official documents granting legal authority to drive or practice a regulated profession.",
-    icon: "📜",
+    icon: "licensure.svg",
     items: [
       {
         id: "drivers-license",
@@ -128,7 +128,7 @@ const idDatabase = {
   "special-groups": {
     title: "Special Groups",
     description: "IDs granting discounts, support, and legal benefits to specific citizen groups.",
-    icon: "🤝",
+    icon: "special-groups.svg",
     items: [
       {
         id: "senior-citizen",
@@ -175,7 +175,7 @@ const idDatabase = {
   "clearances": {
     title: "Clearances",
     description: "Legal background check certifications required for job applications.",
-    icon: "🔍",
+    icon: "clearances.svg",
     items: [
       {
         id: "nbi-clearance",
@@ -206,7 +206,7 @@ const idDatabase = {
   "institutional": {
     title: "Institutional IDs",
     description: "Official cards issued by private entities, postal networks, or schools.",
-    icon: "🏫",
+    icon: "institutional.svg",
     items: [
       {
         id: "postal-id",

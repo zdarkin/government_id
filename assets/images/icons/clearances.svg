@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+    <linearGradient id="checkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+  <!-- Security Badge Base -->
+  <path d="M32,6 C44,6 48,12 48,24 C48,38 38,48 32,54 C26,48 16,38 16,24 C16,12 20,6 32,6 Z" fill="url(#badgeGrad)" filter="drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.15))"/>
+  <!-- Inner Star Emblem -->
+  <polygon points="32,14 34.5,20 41,20.5 36,25 37.5,31.5 32,28 26.5,31.5 28,25 23,20.5 29.5,20" fill="url(#checkGrad)" opacity="0.3"/>
+  <!-- Verified Checkmark Badge -->
+  <circle cx="32" cy="38" r="14" fill="#ffffff" filter="drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2))"/>
+  <path d="M25,37 L30,42 L40,32" fill="none" stroke="#059669" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
