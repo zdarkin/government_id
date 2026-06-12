@@ -1,0 +1,47 @@
+/* =========================================
+   12. PAGE TRANSITIONS (Premium Fade & Slide)
+   ========================================= */
+body > *:not(#navbar-container):not(.back-to-top):not(#page-progress-bar) {
+  animation: pageFadeIn 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+body.fade-out > *:not(#navbar-container):not(.back-to-top):not(#page-progress-bar) {
+  animation: pageFadeOut 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pageFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Sleek top progress bar */
+#page-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  box-shadow: 0 1px 10px rgba(33, 150, 243, 0.4);
+  z-index: 99999;
+  opacity: 1;
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease;
+  pointer-events: none;
+}
