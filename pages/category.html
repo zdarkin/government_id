@@ -11,16 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <!-- Accessibility Skip Link -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
     <div id="navbar-container"></div>
 
     <!-- Breadcrumb Navigation -->
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <nav class="breadcrumbs">
       <ol id="breadcrumbList">
         <li><a href="../index.html">Home</a></li>
-        <li id="breadcrumbActive" aria-current="page">Category</li>
+        <li id="breadcrumbActive">Category</li>
       </ol>
     </nav>
 
@@ -71,7 +68,7 @@
         if (!catKey || !idDatabase[catKey]) {
           titleText.textContent = "Category Not Found";
           descText.textContent = "The requested category could not be located in our database. Please select another category from the homepage.";
-          titleIcon.textContent = "⚠️";
+          titleIcon.textContent = "";
           listContainer.innerHTML = `
             <div style="text-align: center; padding: 40px; color: var(--color-text-muted);">
               <p style="margin-bottom: 20px;">We couldn't find what you were looking for.</p>
@@ -86,7 +83,11 @@
         // 3. Populate Header & Document Title
         document.title = `${category.title} - Philippine Valid IDs Guide`;
         titleText.textContent = category.title;
-        titleIcon.textContent = category.icon;
+        if (category.icon) {
+          titleIcon.innerHTML = `<img src="../assets/images/icons/${category.icon}" alt="${category.title}">`;
+        } else {
+          titleIcon.textContent = "";
+        }
         descText.textContent = category.description;
         breadcrumbActive.textContent = category.title;
 
@@ -124,29 +125,7 @@
           listContainer.innerHTML += cardHTML;
         });
 
-        // 5. Inject dynamic structured data breadcrumbs for SEO
-        const schema = {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": window.location.origin + window.location.pathname.replace("pages/category.html", "index.html")
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": category.title,
-              "item": window.location.href
-            }
-          ]
-        };
-        const script = document.createElement('script');
-        script.type = 'application/ld+json';
-        script.text = JSON.stringify(schema);
-        document.head.appendChild(script);
+
       })();
     </script>
     <script src="../scripts/load-navbar.js"></script>

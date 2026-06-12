@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+  <!-- Background Shield -->
+  <path d="M32,4 L52,12 C52,32 44,48 32,58 C20,48 12,32 12,12 Z" fill="url(#shieldGrad)" filter="drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.15))"/>
+  <!-- Gold Border Highlight -->
+  <path d="M32,7 L48,13.5 C48,29.5 41.5,42.5 32,51 C22.5,42.5 16,29.5 16,13.5 Z" fill="none" stroke="url(#goldGrad)" stroke-width="2" opacity="0.8"/>
+  <!-- Passport/Globe Symbol -->
+  <circle cx="32" cy="28" r="10" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.9"/>
+  <ellipse cx="32" cy="28" rx="4" ry="10" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.7"/>
+  <line x1="22" y1="28" x2="42" y2="28" stroke="#ffffff" stroke-width="1.5" opacity="0.9"/>
+  <!-- Stars Philippine flag -->
+  <polygon points="32,15 33.5,18 36.5,18 34,20 35,23 32,21.5 29,23 30,20 27.5,18 30.5,18" fill="url(#goldGrad)" />
+</svg>

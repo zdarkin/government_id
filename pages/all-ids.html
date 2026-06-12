@@ -18,16 +18,13 @@
   </head>
 
   <body>
-    <!-- Accessibility Skip Link -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
     <div id="navbar-container"></div>
 
     <!-- Breadcrumbs -->
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <nav class="breadcrumbs">
       <ol>
         <li><a href="../index.html">Home</a></li>
-        <li aria-current="page">All IDs</li>
+        <li>All IDs</li>
       </ol>
     </nav>
 
@@ -61,9 +58,8 @@
         `;
         container.appendChild(header);
 
-        // 2. Wrap categories lists in a main-content wrapper for accessibility skip links
+        // 2. Wrap categories lists in a container wrapper
         const mainContentDiv = document.createElement("div");
-        mainContentDiv.id = "main-content";
         container.appendChild(mainContentDiv);
 
         // 3. Render Categories & Items
@@ -81,7 +77,15 @@
           title.style.marginBottom = "20px";
           title.style.color = "var(--color-primary)";
           title.style.fontWeight = "800";
-          title.innerHTML = `${cat.icon} ${cat.title}`;
+          title.style.display = "flex";
+          title.style.alignItems = "center";
+          title.style.gap = "8px";
+          
+          if (cat.icon) {
+            title.innerHTML = `<img src="../assets/images/icons/${cat.icon}" alt="" style="width: 28px; height: 28px; object-fit: contain;"> <span>${cat.title}</span>`;
+          } else {
+            title.textContent = cat.title;
+          }
           section.appendChild(title);
 
           const grid = document.createElement("div");
