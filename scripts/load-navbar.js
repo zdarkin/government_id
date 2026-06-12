@@ -40,6 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Add Back-to-Top Button Dynamically
     addBackToTopButton();
+
+    // 4. Initialize Page Transitions
+    initPageTransitions();
 });
 
 // Resolves a link href based on current folder context
@@ -265,5 +268,87 @@ function addBackToTopButton() {
 
     btn.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+}
+
+// Page Transition & Progress Bar Initialization
+function initPageTransitions() {
+    // 1. Create progress bar for entrance transition
+    const progressBar = document.createElement("div");
+    progressBar.id = "page-progress-bar";
+    document.body.appendChild(progressBar);
+
+    // Simulate entry loading completed
+    setTimeout(() => {
+        progressBar.style.width = "30%";
+        setTimeout(() => {
+            progressBar.style.width = "100%";
+            setTimeout(() => {
+                progressBar.style.opacity = "0";
+                setTimeout(() => {
+                    progressBar.remove();
+                }, 200);
+            }, 300);
+        }, 50);
+    }, 10);
+
+    // 2. Intercept link clicks for exit transition
+    document.addEventListener("click", (e) => {
+        const link = e.target.closest("a");
+        if (!link) return;
+
+        // Skip if modifier keys or non-left click (allows opening in new tab/window)
+        if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+
+        const href = link.getAttribute("href");
+        if (!href) return;
+
+        // Exclude target="_blank", javascript, mailto, tel, same-page anchor links
+        if (link.getAttribute("target") === "_blank") return;
+        if (href.startsWith("javascript:") || href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("#")) return;
+
+        // Verify if it is an internal same-origin link and is a page transition
+        let url;
+        try {
+            url = new URL(link.href, window.location.href);
+        } catch (err) {
+            return;
+        }
+
+        if (url.protocol !== window.location.protocol) return;
+        if (url.protocol !== "file:" && url.origin !== window.location.origin) return;
+
+        // Exclude same page hash jumps
+        const currentUrlClean = window.location.href.split('#')[0];
+        const targetUrlClean = link.href.split('#')[0];
+        if (currentUrlClean === targetUrlClean) return;
+
+        // Prevent default navigation
+        e.preventDefault();
+
+        // Perform fade-out and navigate
+        const exitBar = document.createElement("div");
+        exitBar.id = "page-progress-bar";
+        document.body.appendChild(exitBar);
+        
+        // Trigger simulated progression
+        setTimeout(() => {
+            exitBar.style.width = "90%";
+        }, 10);
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+            window.location.href = link.href;
+        }, 300); // Wait for the fade-out animation to complete (300ms)
+    });
+
+    // 3. Handle browser Back/Forward (bfcache)
+    window.addEventListener("pageshow", (event) => {
+        if (event.persisted) {
+            document.body.classList.remove("fade-out");
+            const oldBar = document.getElementById("page-progress-bar");
+            if (oldBar) oldBar.remove();
+        }
     });
 }
