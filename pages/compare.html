@@ -73,39 +73,39 @@
             <!-- Dynamic rows will be inserted here -->
             <tr>
               <td class="compare-feature-name">Classification</td>
-              <td id="row-class-1" class="compare-empty-col">No ID selected</td>
-              <td id="row-class-2" class="compare-empty-col">No ID selected</td>
-              <td id="row-class-3" class="compare-empty-col">No ID selected</td>
+              <td id="row-class-1" class="compare-empty-col" data-label="ID 1">No ID selected</td>
+              <td id="row-class-2" class="compare-empty-col" data-label="ID 2">No ID selected</td>
+              <td id="row-class-3" class="compare-empty-col" data-label="ID 3">No ID selected</td>
             </tr>
             <tr>
               <td class="compare-feature-name">Estimated Cost</td>
-              <td id="row-cost-1" class="compare-empty-col">No ID selected</td>
-              <td id="row-cost-2" class="compare-empty-col">No ID selected</td>
-              <td id="row-cost-3" class="compare-empty-col">No ID selected</td>
+              <td id="row-cost-1" class="compare-empty-col" data-label="ID 1">No ID selected</td>
+              <td id="row-cost-2" class="compare-empty-col" data-label="ID 2">No ID selected</td>
+              <td id="row-cost-3" class="compare-empty-col" data-label="ID 3">No ID selected</td>
             </tr>
             <tr>
               <td class="compare-feature-name">Processing Time</td>
-              <td id="row-time-1" class="compare-empty-col">No ID selected</td>
-              <td id="row-time-2" class="compare-empty-col">No ID selected</td>
-              <td id="row-time-3" class="compare-empty-col">No ID selected</td>
+              <td id="row-time-1" class="compare-empty-col" data-label="ID 1">No ID selected</td>
+              <td id="row-time-2" class="compare-empty-col" data-label="ID 2">No ID selected</td>
+              <td id="row-time-3" class="compare-empty-col" data-label="ID 3">No ID selected</td>
             </tr>
             <tr>
               <td class="compare-feature-name">Validity Period</td>
-              <td id="row-valid-1" class="compare-empty-col">No ID selected</td>
-              <td id="row-valid-2" class="compare-empty-col">No ID selected</td>
-              <td id="row-valid-3" class="compare-empty-col">No ID selected</td>
+              <td id="row-valid-1" class="compare-empty-col" data-label="ID 1">No ID selected</td>
+              <td id="row-valid-2" class="compare-empty-col" data-label="ID 2">No ID selected</td>
+              <td id="row-valid-3" class="compare-empty-col" data-label="ID 3">No ID selected</td>
             </tr>
             <tr>
               <td class="compare-feature-name">Requirements Count</td>
-              <td id="row-reqs-1" class="compare-empty-col">No ID selected</td>
-              <td id="row-reqs-2" class="compare-empty-col">No ID selected</td>
-              <td id="row-reqs-3" class="compare-empty-col">No ID selected</td>
+              <td id="row-reqs-1" class="compare-empty-col" data-label="ID 1">No ID selected</td>
+              <td id="row-reqs-2" class="compare-empty-col" data-label="ID 2">No ID selected</td>
+              <td id="row-reqs-3" class="compare-empty-col" data-label="ID 3">No ID selected</td>
             </tr>
             <tr>
               <td class="compare-feature-name">Action</td>
-              <td id="row-action-1" class="compare-empty-col">--</td>
-              <td id="row-action-2" class="compare-empty-col">--</td>
-              <td id="row-action-3" class="compare-empty-col">--</td>
+              <td id="row-action-1" class="compare-empty-col" data-label="ID 1">--</td>
+              <td id="row-action-2" class="compare-empty-col" data-label="ID 2">--</td>
+              <td id="row-action-3" class="compare-empty-col" data-label="ID 3">--</td>
             </tr>
           </tbody>
         </table>
@@ -192,6 +192,12 @@
 
             // Populate columns
             colTitle.textContent = data.name;
+
+            // Update data-label on all cells for this column
+            const label = data.name;
+            [cellClass, cellCost, cellTime, cellValid, cellReqs, cellAction].forEach(cell => {
+              cell.setAttribute('data-label', label);
+            });
             
             // Classification Badge
             const badgeClass = summary.status === "primary" ? "badge-primary" : "badge-secondary";

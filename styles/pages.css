@@ -629,6 +629,8 @@
   padding: 16px 20px;
   border-bottom: 1px solid var(--color-bg-border);
   font-size: 14px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 .compare-table th {
   background-color: var(--color-primary);
@@ -643,6 +645,7 @@
   color: var(--color-text-main);
   background-color: var(--color-bg-base);
   width: 200px;
+  white-space: nowrap;
 }
 .compare-empty-col {
   color: var(--color-text-muted);
@@ -656,6 +659,90 @@
 @media (max-width: 768px) {
   .compare-selectors {
     grid-template-columns: 1fr;
+  }
+  .compare-table th,
+  .compare-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .compare-feature-name {
+    width: 100px;
+    font-size: 11px;
+    white-space: normal;
+  }
+}
+
+/* Stacked card layout for very small screens */
+@media (max-width: 540px) {
+  .compare-table-wrapper {
+    border: none;
+    box-shadow: none;
+    overflow-x: visible;
+  }
+  .compare-table,
+  .compare-table thead,
+  .compare-table tbody,
+  .compare-table th,
+  .compare-table td,
+  .compare-table tr {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  /* Hide the original header row */
+  .compare-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  /* Each row becomes a card */
+  .compare-table tbody tr {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-bg-border);
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+    padding: 0;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .compare-table tbody tr:last-child {
+    margin-bottom: 0;
+  }
+  /* Feature label cell becomes full-width header */
+  .compare-table td.compare-feature-name {
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 14px;
+    width: 100%;
+    white-space: normal;
+  }
+  /* Data cells shown below the label */
+  .compare-table td:not(.compare-feature-name) {
+    padding: 10px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--color-bg-border);
+    text-align: left;
+    width: 100%;
+  }
+  .compare-table td:not(.compare-feature-name)::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-muted);
+    margin-bottom: 4px;
+  }
+  .compare-table td:last-child {
+    border-bottom: none;
+  }
+  .compare-empty-col {
+    text-align: left;
   }
 }
 
