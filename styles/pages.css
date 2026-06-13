@@ -604,6 +604,9 @@
   font-size: 15px;
   cursor: pointer;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 .compare-select:focus {
   border-color: var(--color-primary);
@@ -620,6 +623,7 @@
   border-collapse: collapse;
   background-color: var(--color-bg-surface);
   text-align: left;
+  table-layout: fixed;
 }
 .compare-table th, .compare-table td {
   padding: 16px 20px;
