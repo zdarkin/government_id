@@ -1,0 +1,112 @@
+/* =========================================
+   1. BASE DESIGN TOKENS & RESPONSIVE THEMES
+   ========================================= */
+:root {
+  /* HSL Color Palette */
+  --hue-primary: 210; /* Blue */
+  --hue-accent: 35;   /* Orange/Amber */
+
+  /* Light Theme Colors */
+  --color-primary: hsl(var(--hue-primary), 75%, 50%);
+  --color-primary-dark: hsl(var(--hue-primary), 80%, 40%);
+  --color-primary-light: hsl(var(--hue-primary), 85%, 95%);
+  --color-primary-light-hover: hsl(var(--hue-primary), 80%, 88%);
+  
+  --color-accent: hsl(var(--hue-accent), 100%, 50%);
+  --color-accent-dark: hsl(var(--hue-accent), 100%, 43%);
+  --color-accent-light: hsl(var(--hue-accent), 100%, 95%);
+  
+  --color-bg-base: #f8f9fa;
+  --color-bg-surface: #ffffff;
+  --color-bg-alt: #f1f3f5;
+  --color-bg-border: #e9ecef;
+  
+  --color-text-main: #212529;
+  --color-text-muted: #6c757d;
+  --color-text-light: #ffffff;
+  
+  --color-success: #2b8a3e;
+  --color-success-bg: #ebfbee;
+  --color-warning: #e67e22;
+  --color-warning-bg: #fffbf2;
+  --color-danger: #c92a2a;
+  
+  /* Shared Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
+  
+  /* Typography */
+  --font-base: "Inter", sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
+  
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  --navbar-height: 65px;
+}
+
+/* Dark Theme Overrides */
+body.dark-theme {
+  --color-bg-base: #0f111a;
+  --color-bg-surface: #171923;
+  --color-bg-alt: #1f2232;
+  --color-bg-border: #2d3142;
+  
+  --color-text-main: #f8f9fa;
+  --color-text-muted: #a0aec0;
+  
+  --color-primary: hsl(var(--hue-primary), 75%, 55%);
+  --color-primary-light: hsl(var(--hue-primary), 35%, 15%);
+  --color-primary-light-hover: hsl(var(--hue-primary), 30%, 20%);
+  
+  --color-success: #40c057;
+  --color-success-bg: rgba(43, 138, 62, 0.15);
+  --color-warning: #ff922b;
+  --color-warning-bg: rgba(230, 126, 34, 0.15);
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* =========================================
+   2. GLOBAL STYLE & ACCESSIBILITY RESET
+   ========================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-base);
+}
+
+html, body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  scroll-behavior: smooth;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-border);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
