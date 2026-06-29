@@ -5,7 +5,8 @@ body > *:not(#navbar-container):not(.back-to-top):not(#page-progress-bar) {
   animation: pageFadeIn 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-body.fade-out > *:not(#navbar-container):not(.back-to-top):not(#page-progress-bar) {
+body.fade-out
+  > *:not(#navbar-container):not(.back-to-top):not(#page-progress-bar) {
   animation: pageFadeOut 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
 }
 
@@ -38,10 +39,16 @@ body.fade-out > *:not(#navbar-container):not(.back-to-top):not(#page-progress-ba
   left: 0;
   height: 3px;
   width: 0;
-  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  background: linear-gradient(
+    90deg,
+    var(--color-primary) 0%,
+    var(--color-accent) 100%
+  );
   box-shadow: 0 1px 10px rgba(33, 150, 243, 0.4);
   z-index: 99999;
   opacity: 1;
-  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease;
+  transition:
+    width 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.2s ease;
   pointer-events: none;
 }

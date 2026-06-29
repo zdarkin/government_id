@@ -22,16 +22,16 @@
     <div id="navbar-container"></div>
 
     <!-- Breadcrumbs -->
-    <nav class="breadcrumbs">
+    <div class="breadcrumbs">
       <ol>
         <li><a href="../index.html">Home</a></li>
         <li>All IDs</li>
       </ol>
-    </nav>
+    </div>
 
-    <main id="all-ids-list">
+    <div id="all-ids-list">
       <!-- Header and ID categories lists will be injected here -->
-    </main>
+    </div>
 
     <div id="footer-container"></div>
 
@@ -41,6 +41,21 @@
       (function () {
         if (typeof idDatabase === "undefined") return;
         const container = document.getElementById("all-ids-list");
+
+        // Safe HTML escaping utility
+        function escapeHTML(str) {
+          if (!str) return "";
+          return str.replace(/[&<>'"]/g, (tag) => {
+            const chars = {
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              "'": "&#39;",
+              '"': "&quot;",
+            };
+            return chars[tag] || tag;
+          });
+        }
 
         // 1. Render Page Header
         const header = document.createElement("div");
@@ -81,9 +96,9 @@
           title.style.display = "flex";
           title.style.alignItems = "center";
           title.style.gap = "8px";
-          
+
           if (cat.icon) {
-            title.innerHTML = `<img src="../assets/images/icons/${cat.icon}" alt="" style="width: 28px; height: 28px; object-fit: contain;"> <span>${cat.title}</span>`;
+            title.innerHTML = `<img loading="lazy" src="../assets/images/icons/${escapeHTML(cat.icon)}" alt="" style="width: 28px; height: 28px; object-fit: contain;"> <span>${escapeHTML(cat.title)}</span>`;
           } else {
             title.textContent = cat.title;
           }
@@ -92,38 +107,37 @@
           const grid = document.createElement("div");
           grid.className = "id-grid";
 
+          const cardsHTML = [];
           (cat.items || []).forEach((item) => {
-            const a = document.createElement("a");
-            a.className = "id-item-card";
-            a.href = item.link || "#";
-
             const badgeClass =
               item.status === "primary" ? "badge-primary" : "badge-secondary";
             const badgeLabel =
               item.status === "primary" ? "Primary ID" : "Secondary ID";
 
-            a.innerHTML = `
-              <div class="id-item-info">
-                <div class="id-title-row">
-                  <h2>${item.name}</h2>
-                  <span class="badge ${badgeClass}">${badgeLabel}</span>
+            cardsHTML.push(`
+              <a class="id-item-card" href="${escapeHTML(item.link || '#')}">
+                <div class="id-item-info">
+                  <div class="id-title-row">
+                    <h2>${escapeHTML(item.name)}</h2>
+                    <span class="badge ${escapeHTML(badgeClass)}">${escapeHTML(badgeLabel)}</span>
+                  </div>
+                  <p>${escapeHTML(item.tagline || "")}</p>
                 </div>
-                <p>${item.tagline || ""}</p>
-              </div>
-              <div class="id-item-meta">
-                <div class="cost-badge">${item.cost || ""}</div>
-                <div>
-                  <span class="view-btn">
-                    View
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </span>
+                <div class="id-item-meta">
+                  <div class="cost-badge">${escapeHTML(item.cost || "")}</div>
+                  <div>
+                    <span class="view-btn">
+                      View
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            `;
-            grid.appendChild(a);
+              </a>
+            `);
           });
+          grid.innerHTML = cardsHTML.join("");
 
           section.appendChild(grid);
           mainContentDiv.appendChild(section);
